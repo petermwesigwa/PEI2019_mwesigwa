@@ -1,0 +1,14 @@
+#! /bin/tcsh
+
+# Printa all numbers from 1 to n as specified by the user
+
+# last edited by Peter Mwesigwa on June 11 2019.
+
+
+set n=$1
+
+foreach item (1..n)
+    echo $item
+
+echo All done
+
