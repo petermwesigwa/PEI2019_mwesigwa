@@ -1,0 +1,15 @@
+#! /bin/bash 
+#
+# Last edited by Peter Mwesigwa
+#
+# Date modified: 2019-06-12 14:26:35 EDT
+#
+#
+#
+
+for((i=0;i < 11;i++)) ; 
+do
+    echo $i
+
+done
+
