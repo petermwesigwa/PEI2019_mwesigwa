@@ -1,0 +1,26 @@
+function [fig] = plotlatvslong(data)
+  % function [fig] = plotlatvslong(data)
+%
+% Description
+% This data takes in the float data parsed from the float and then plots the latitude and longitude columns
+% Returns the handle to the figure plotted
+% 
+% Input
+% DATA  Matrix parsed from the data url
+%
+% Output
+% HA    Handle to the latitude vs longitude plot
+%
+% Authored by Peter Mwesigwa
+% Last modified June 18 2019
+%
+
+latitude = str2num(char(data(:,4)));
+longitude = str2num(char(data(:,5)));
+  
+fig = figure();
+
+ha  = plot(longitude, latitude, 'kx');
+title('Float positions');
+ylabel('Latitude');
+xlabel('Longitude');

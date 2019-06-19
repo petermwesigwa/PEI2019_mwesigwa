@@ -1,0 +1,29 @@
+function [m c] = trajectories[lats longs]
+% function [m c] = trajectories[lats longs]
+% 
+% Description
+% This function takes in the vectors for the latitude and longitude. 
+% Returns two vectors, one containing the gradient and the other containing the intercepts
+% Each point is trained on the three points before it, therefore, the first 3 points will not be
+% trained
+%
+% Inputs
+% LATS - The vector of latitudes of the different points
+% LONGS - The vector of longitudes of the given points
+% 
+% Outputs
+% m - The gradients of the expected paths of the points 
+% c - The intercepts of the expected paths of the points
+%
+% Authored by Peter Mwesigwa
+% Last modified Jun 18 2019
+%
+%
+
+  for n = 4:size(lats)
+
+	    x = [transpose(longs(n-2:n));[1 1 1]]
+	    y = lats(n-2:n)
+	    
+
+% Using matrix algebra to calculate the line of best fit
