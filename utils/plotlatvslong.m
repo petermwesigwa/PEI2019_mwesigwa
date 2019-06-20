@@ -13,9 +13,8 @@ function [lats, longs, fig] = plotlatvslong(data, plotornot)
 % LATS   Vector of the latitudes of the floats as from the data
 % LONGS  Vector of the longitudes of the floats as from the data
 % FIG    Handle to the latitude vs longitude plot
-% 
 % Authored by Peter Mwesigwa
-% Last modified June 18 2019
+% Last modified June 19 2019
 %
 
 lats = str2num(char(data(:,4)));

@@ -1,0 +1,17 @@
+function [plt quiv] = plotmermaiddata(url, points, fig)
+
+  % function [fig plt quiv] = plotmermaiddata(url, fig)
+%
+% Description
+% Reads in the data for a plot of a particular float and plots the data over a few days
+%
+% Inputs
+% URL - the url to retrieve the text file with the information
+% FIG - the figure to contain the plot
+% POINTs - the number of points to be used to generate the linear model for computing the trajectories
+% Outputs - 
+% plt - plot of the data
+
+
+  data = parsemermaiddata(url)
+  [plt qui
