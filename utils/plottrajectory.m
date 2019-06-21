@@ -69,5 +69,5 @@ hold off;
 title(strcat('Mermaid locations over 30 days with expected trajectories for', ' ', data{1,1}))
 ylabel('Latitude')
 xlabel('Longitude')
-text(longs, lats, r_squared)
+%text(longs, lats, r_squared)
 
