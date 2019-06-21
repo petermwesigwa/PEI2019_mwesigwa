@@ -15,10 +15,15 @@ function [data] = parsemermaiddata(url)
   
   data_received = webread(url);
 split_data = strsplit(data_received, '\n');
+rows = length(split_data);
+d=strsplit(split_data{1}, '  ');
+cols = length(d);
 
-data=strsplit(split_data{1});
-
-for n = 2:length(split_data)-1 
-	  data = [data;strsplit(split_data{n})];
+data = cell(rows-1, cols);
+for i = 1:rows-1
+    d = strsplit(split_data{i}, '  ');
+    for j = 1:cols
+	  data(i,j) = d(j);
+    end
 end
 
