@@ -1,26 +1,32 @@
-function varargout= parsemermaiddata(url)
-% [data,url] = parsemermaiddata(url)
-%
-% This function reads in data from a url in the form of a text file
-% and stores the information in a cell
+function varargout = parsemermaiddata(url)
+
+% function [data] = parsemermaiddata(url)
+% This function reads in data from a url in the form of a text file and stores the information in a matrix
 % 
 % Inputs:
 % URL   The remote url from which the data is going to be recieved
 %
 % Outputs:
 % DATA  The matrix containing the data for the url
-% URL   The remote url from which the data is going to be recieved
+% URL   The url from which the data was retrieved
 %
-% Authored by Peter Mwesigwa. 
-% 
-% Last modified on June 18 2019
+% Example usage:
+% [data url] =
+% parsemermaiddata('http://geoweb.princeton.edu/people/simons/SOM/P017_030.txt')
+%
+% Last modified by mwesigwa@princeton.edu on Jun 24 2019
 
-% Example URL
-defval('url','http://geoweb.princeton.edu/people/simons/SOM/P017_030.txt')
+% Example url
+defval('url', 'http://geoweb.princeton.edu/people/simons/SOM/P017_030.txt')
 
+% read in the data from the url
 data_received = webread(url);
+
+% get the number of rows for the data
 split_data = strsplit(data_received, '\n');
 rows = length(split_data);
+
+% get the number of columns for the data
 d=strsplit(split_data{1}, '  ');
 cols = length(d);
 
