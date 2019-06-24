@@ -2,7 +2,7 @@ function [m] = derivative(coeffs, x)
 % function [m] = getTangent(coeffs)
 % 
 % Description:
-% computes the gradien
+% computes the gradient
 %
 % Inputs
 % COEFFS: the coefficients for the polynomial
@@ -15,6 +15,7 @@ function [m] = derivative(coeffs, x)
 
 n = length(coeffs);
 m = 0;
+
 for i = 1:n-1
     m = m + (n-i) * coeffs(i) * x^(n-1-i);
-end
+end 
