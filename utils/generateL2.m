@@ -1,4 +1,4 @@
-function [coeffs] = generateL2(x_vals, y_vals, degree, xver)
+function varargout = generateL2(x_vals, y_vals, degree, xver)
 % function [coeffs] = generateL2(x_vals, y_vals, degree, xver)
 % 
 % Description
@@ -15,6 +15,7 @@ function [coeffs] = generateL2(x_vals, y_vals, degree, xver)
 % Outputs
 % COEFFS Coefficients of the polynomial of best fit ax^n + bx^(n-1) 
 %  + ... + k returned as an array [a, b, ..., k]
+%
 % Example usage
 % coeffs = generateL2(1:4, 2:5, 1)
 %  returns [1 1]
@@ -23,7 +24,7 @@ function [coeffs] = generateL2(x_vals, y_vals, degree, xver)
 % Last modified by mwesigwa@princeton.edu Jun 21 2019
 %
 
-n = length(x_vals)
+n = length(x_vals);
 
 % create the X matrix
 x = str2double(cell(n, degree+1)); 
@@ -34,24 +35,27 @@ for j=1:degree+1
 end
 
 % Compute the linear fit for all these points
-defval('meth',1)
+defval('meth',2)
 switch meth
   case 1
     % transpose the x matrix
-    xT = transpose(x)
+    xT = transpose(x);
     
     % compute the coefficients of regression
     xTx = xT*x;
     xTy = xT*y_vals;
     coeffs = xTx\xTy;
   case 2
-    
-    
-    coeffs = pinv(x)*y;
+    coeffs = pinv(x)*y_vals;
   case 3
 end
 
 defval('xver', 0)
 if xver==1
+  x
   plot(x_vals, y_vals, 'kx')
 end
+
+% return optional arguments
+varns={coeffs};
+varargout=varns(1:nargout);
