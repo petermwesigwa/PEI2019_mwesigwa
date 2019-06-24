@@ -26,10 +26,11 @@ function [coeffs] = generateL2(x_vals, y_vals, degree)
     end
     
     xT = transpose(x);
-    y = y_vals;
 
     % Compute the linear fit for all these points
     xTx = xT*x;
-    xTy = xT*y;
+    xTy = xT*y_vals;
     coeffs = xTx\xTy;
+    
+    p = plot(x_vals, y_vals, 'kx');
     

@@ -31,7 +31,7 @@ dLats=zeros(n);
 r2Longs=zeros(n);
 r2Lats=zeros(n);
 
-for i=points:n-points
+for i=points: n-points
     % generate the time in seconds as an independent variable
     dates = datetime(char(data(i-points+1:i+points,2)));
     times = seconds(dates - dates(1));
