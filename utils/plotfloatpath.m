@@ -1,4 +1,4 @@
-function [plt quiv] = plotfloatpath(float_name, points, degree, fig)
+function [plt, quiv, r2Longs, r2Lats] = plotfloatpath(float_name, points, degree, fig)
 
   % function [plt quiv] = plotfloatpath(float_name, points, degree, fig)
 %
@@ -19,4 +19,5 @@ function [plt quiv] = plotfloatpath(float_name, points, degree, fig)
 
   url = strcat('http://geoweb.princeton.edu/people/simons/SOM/', float_name, '_030.txt');
   data = parsemermaiddata(url);
-[plt quiv] = plottrajectory(data, points, degree, fig);
+  [longs, lats, dLongs, dLats, r2Longs, r2Lats] = predictfloatpaths(data, points, degree, fig);
+  [plt, quiv] = plotpath(float_name, longs, lats, dLongs, dLats, fig);
