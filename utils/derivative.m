@@ -11,12 +11,13 @@ function [m] = derivative(coeffs, x)
 % Outputs
 % M: the gradient of the tangent
 %
-% Last modified by mwesigwa@princeton.edu Jun 22 2019
+% Last modified by mwesigwa@princeton.edu Jun 25 2019
 % 
 
 n = length(coeffs);
 m = 0;
 
 for i = 1:n-1
+  % differentiate each term of polynomial and add it to gradient
     m = m + (n-i) * coeffs(i) * x^(n-1-i);
 end
