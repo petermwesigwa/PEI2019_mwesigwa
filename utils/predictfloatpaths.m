@@ -1,5 +1,6 @@
 function varargout = predictfloatpaths(data, trainSize, testSize, degree)
-% function [longs, lats, dLongs, dLats, stats] = predictfloatpaths(data, points, degree)
+% function [longs, lats, dLongs, dLats, stats] = 
+% predictfloatpaths(data, trainSize, testSize, degree)
 % 
 % Description
 % 

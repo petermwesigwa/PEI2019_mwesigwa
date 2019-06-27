@@ -1,7 +1,7 @@
 function varargout = plotfloatpath(float_name, trainSize, testSize, degree, fig)  
 % function [plt quiv meanErrLongs meanErrLats
 % sdErrLongs sdErrLats r2Longs r2Lats] = 
-% plotfloatpath(float_name, points, degree, fig)
+% plotfloatpath(float_name, trainSize, testSize, degree, fig)
 %
 % Description
 % Displays the reported locations of a mermaid float over the past
