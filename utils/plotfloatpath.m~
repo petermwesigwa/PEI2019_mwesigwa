@@ -1,7 +1,6 @@
-function varargout = plotfloatpath(float_name, trainSize, testSize, degree, fig)  
+function varargout = plotfloatpath(float_name, points, degree, fig)  
 % function [plt quiv meanErrLongs meanErrLats
-% sdErrLongs sdErrLats r2Longs r2Lats] = 
-% plotfloatpath(float_name, points, degree, fig)
+% sdErrLongs sdErrLats r2Longs r2Lats] = plotfloatpath(float_name, points, degree, fig)
 %
 % Description
 % Displays the reported locations of a mermaid float over the past
@@ -12,9 +11,8 @@ function varargout = plotfloatpath(float_name, trainSize, testSize, degree, fig)
 % Inputs
 % FLOATNAME  Name of the float whose information we want to plot
 % FIG  the figure to contain the plot (if any)
-% TRAINSIZE  the size of the training set for developing the model. Default
-% is 7
-% TESTSIZE  size of the test set for testing the model's accuracy
+% T   the number of points to be used to generate the linear
+% model for computing the trajectories. Default number is 7
 % DEGREE  the degree used for the fit of all the points. Default
 % number is 2
 %
@@ -46,8 +44,7 @@ data = parsemermaiddata(url);
 
 % make predictions for each data point in the data
 [longs, lats, dLongs, dLats, stats] = predictfloatpaths(data, ...
-                                                  trainSize, testSize, ...
-                                                  degree);
+                                                  points, degree);
 
 % plot the data points as well as the predictions
 [plt, quiv] = plotpath(float_name, longs, lats, dLongs, dLats, fig);

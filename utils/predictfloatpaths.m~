@@ -7,8 +7,7 @@ function varargout = predictfloatpaths(data, trainSize, testSize, degree)
 % 
 % Inputs
 % DATA - the data as returned by PARSEMERMAIDDATA
-% TRAINSIZE - size of the training set
-% TESTSET - size of the test set
+% POINTS - number of points used in the prediction
 % DEGREE - degree of the polynomial used for the fit
 % 
 % Outputs
@@ -26,7 +25,7 @@ function varargout = predictfloatpaths(data, trainSize, testSize, degree)
 % R2LONGS  The r^2 values of the longitude predictions for each float
 % R2LATS  The r^2 values of the latitude predictions for each float
 %
-% Last modified by Peter Mwesigwa  on Jun 27 2019
+% Last modified by Peter Mwesigwa  on Jun 26 2019
 %
 
 defval('trainSize', 7)
