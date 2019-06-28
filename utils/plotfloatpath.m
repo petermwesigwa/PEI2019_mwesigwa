@@ -1,7 +1,8 @@
-function varargout = plotfloatpath(float_name, trainSize, testSize, degree, fig)  
+function varargout = plotfloatpath(float_name, trainSize, testSize, ...
+                                   degree, fig, plotornot, xver)  
 % function [plt quiv meanErrLongs meanErrLats
 % sdErrLongs sdErrLats r2Longs r2Lats] = 
-% plotfloatpath(float_name, trainSize, testSize, degree, fig)
+% plotfloatpath(float_name, trainSize, testSize, degree, fig, xver)
 %
 % Description
 % Displays the reported locations of a mermaid float over the past
@@ -17,17 +18,25 @@ function varargout = plotfloatpath(float_name, trainSize, testSize, degree, fig)
 % TESTSIZE  size of the test set for testing the model's accuracy
 % DEGREE  the degree used for the fit of all the points. Default
 % number is 2
+% PLOTORNOT plot the points and trajectories if 1, otherwise not
+% XVER extra verification, runs additional tests if 1, otherwise not
 %
 % Outputs 
 % PLT  plot of the data
 % QUIV  the quiver plot of the data
-% R2LONGS  the r2 values for the longitude velocity prediction of
-% each point
-% R2LATS the r^2 values for the latitude velocity predictions for
-% each point
+% STATS A 6 column matrix detailing stats measuring the accuracy of
+% the model. The columns are coefficient of determination, mean
+% error, standard deviation of error, and error scaling factor with
+% time for longitudes and latitudes respectively 
+% |      r^2      |     mean     |    stddev    | error factor |
+% | longs | lats  | longs | lats | longs | lats | longs | lats |
+%
 %
 % Example Usage
-% [plt] = plotfloatpath('P018, 7, 2, fig)
+% plt = plotfloatpath('P018, 7, 2, fig)
+% Returns the plot handle for the graph plotted. Add extra
+% parameters to get the quiver plot as well as stats detailing the
+% accuracy of the plot
 %
 % Last modified by mwesigwa@princeton.edu Jun 27 2019
 %
@@ -35,8 +44,10 @@ function varargout = plotfloatpath(float_name, trainSize, testSize, degree, fig)
 
 % default values for the parameters
 defval('float_name', 'P020');
-defval('points', 7);
+defval('trainSize', 7);
+defval('testSize', 10);
 defval('degree', 2);
+defval('xver', 0);
 
 % construct the url with the data for this particular float
 url = strcat('http://geoweb.princeton.edu/people/simons/SOM/', float_name, '_030.txt');
@@ -45,10 +56,11 @@ url = strcat('http://geoweb.princeton.edu/people/simons/SOM/', float_name, '_030
 data = parsemermaiddata(url);
 
 % make predictions for each data point in the data
-[longs, lats, dLongs, dLats, stats] = predictfloatpaths(data, ...
+[longs, lats, dLongs, dLats, fitLongs, fitLats, stats] = predictfloatpaths(data, ...
                                                   trainSize, testSize, ...
-                                                  degree);
-
+                                                  degree, xver);
+dLongs
+dLats
 % plot the data points as well as the predictions
 [plt, quiv] = plotpath(float_name, longs, lats, dLongs, dLats, fig);
 

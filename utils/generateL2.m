@@ -57,7 +57,11 @@ end
 defval('xver', 0)
 if xver==1
   x
+  coeffs
   plot(x_vals, y_vals, 'kx')
+  hold on;
+  plot(x_vals, evalpol(coeffs, x_vals))
+  hold off;
 end
 
 % return optional arguments

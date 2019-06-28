@@ -31,7 +31,7 @@ d=strsplit(split_data{1}, '  ');
 cols = length(d);
 
 defval('meth',2)
-tic
+
 switch meth
   case 1
     % Vectorized, which you hope to be faste
@@ -45,7 +45,7 @@ switch meth
       end
     end
 end
-toc
+
     
 % Optional output
 varns={data,url};

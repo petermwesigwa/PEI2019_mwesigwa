@@ -1,0 +1,15 @@
+function varargout  = trackmermaids()
+
+% Description:
+% Gets the current position of all the mermaid as well as returning
+% their expected position a set period of time from now
+%
+
+url_all = 'http://geoweb.princeton.edu/people/simons/SOM/all.txt
+
+current_data = parsemermaiddata(url_all);
+
+
+% optional output
+varns = {current_data};
+varargout = varns(1:nargout);

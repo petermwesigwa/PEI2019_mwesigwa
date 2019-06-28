@@ -15,11 +15,8 @@ function varargout = testfit(x_vals, y_vals, fit)
 % independent and dependent variable. This is a fraction stating
 % the fraction of the variance in the dependent variable can be
 % explained by that of the independent variable. 
-% MEANERR the mean of the differences between the true values and
-% predicted values of the dependent variable
-% SERR the standard deviation of the differences between the true
-% values and the predicted values of the dependent variable
-%
+% ERRORS the difference between the predicted y-value and the
+% observed y-value for each observation in the training set
 % Last modified by mwesigwa@princeton.edu Jun 26 2019
 %
 
@@ -43,10 +40,8 @@ me = y_vals/length(y_vals);
 sd = y_vals - me;
 ssd = sd'*sd;
 
-mean_err = mean(errors);
-s_err = std(errors);
 r_squared = 1 - sse/ssd;
 
 % optional arguments
-varns={r_squared, mean_err, s_err};
+varns={r_squared, errors};
 varargout=varns(1:nargout);
