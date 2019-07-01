@@ -1,9 +1,21 @@
-function varargout  = trackmermaids(hours)
+function varargout  = trackmermaids(date)
 
 % Description:
 % Gets the current position of all the mermaid as well as returning
 % their expected position a set period of time from now
 %
+% Inputs
+% DATE  A string representing the date on which predictions for the
+% float location are to be made. Format must be in MM-DD-YYYY or
+% MM-DD-YYYY HH:MM:SS% 
+% Output:
+%
+%
+% Last modified by mwesigwa@princeton.edu on Jul 01 2019
+%
+
+% convert the date into a date number
+dnum = datenum(datetime(date));
 
 url_all = 'http://geoweb.princeton.edu/people/simons/SOM/all.txt';
 
@@ -43,25 +55,22 @@ for i=1:n
     url = strcat('http://geoweb.princeton.edu/people/simons/SOM/', ...
                float_names(i,:), '_030.txt');
     data = parsemermaiddata(url);
-    [lon, lat, dLong, dLat, fitLong, fitLat] = predictfloatpaths(data, ...
+    [lon, lat, dLong, dLat, longFit, latFit] = predictfloatpaths(data, ...
                                            10, 0, deg);
     lon_vel(i) = dLong(end);
-    lat_vel(i) = dLat(end);
-    longFit = fitLong(end);
-    latFit = fitLat(end);
-    long_pos(i) = longs(i) + evalpol(longFit, hours);
-    lat_pos(i) = lats(i) + evalpol(latFit, hours);
+    lat_vel(i) = dLat(end);                          ;
+    long_pos(i) = longs(i) + evalpol(longFit, dnum);
+    lat_pos(i) = lats(i) + evalpol(latFit, dnum);
 
   catch
-    lon_vel(i) = 0;
-    lat_vel(i) = 0;
+    lon_vel(i) = NaN;
+    lat_vel(i) = NaN;
   end
 end
 
-longs
-lats
-long_pos
-lat_pos
+longFit
+latFit
+dnum
 
 plot(longs, lats, 'bs');
 plot(lon_ships, lat_ships);

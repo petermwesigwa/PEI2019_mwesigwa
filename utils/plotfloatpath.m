@@ -47,6 +47,7 @@ defval('float_name', 'P020');
 defval('trainSize', 7);
 defval('testSize', 10);
 defval('degree', 2);
+defval('plotornot', 1);
 defval('xver', 0);
 
 % construct the url with the data for this particular float
@@ -59,8 +60,6 @@ data = parsemermaiddata(url);
 [longs, lats, dLongs, dLats, fitLongs, fitLats, stats] = predictfloatpaths(data, ...
                                                   trainSize, testSize, ...
                                                   degree, xver);
-dLongs
-dLats
 % plot the data points as well as the predictions
 [plt, quiv] = plotpath(float_name, longs, lats, dLongs, dLats, fig);
 
