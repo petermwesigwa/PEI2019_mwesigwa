@@ -24,7 +24,7 @@ function y = evalpol(coeffs, x)
 
 
 % initialize y values
-y = zeros(size(x))
+y = zeros(size(x));
 
 % degree of polynomial
 degree = length(coeffs);
