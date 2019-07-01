@@ -64,6 +64,7 @@ long_pos
 lat_pos
 
 plot(longs, lats, 'bs');
+plot(lon_ships, lat_ships);
 hold on;
 text(longs, lats, float_names);
 plot(long_pos, lat_pos, 'rx');
