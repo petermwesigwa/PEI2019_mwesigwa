@@ -1,0 +1,5 @@
+#! /usr/bin/bash
+
+filename=$1
+
+awk '{print}' $filename | sed 's/,/ /g' > ~/PEI2019_mwesigwa/data2/output2.txt

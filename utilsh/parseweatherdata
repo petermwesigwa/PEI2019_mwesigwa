@@ -1,0 +1,20 @@
+#! /usr/bin/bash
+
+filename=$1
+
+echo The files will be stored in directory Processed_Weather_Data inside the data2 folder
+
+if [ ! -d $'~/PEI2019_mwesigwa/data2/Processed_Weather_Data' ]; then
+   mkdir $'~/PEI2019_mwesigw/data2/Processed'
+   echo  Created Processed_Weather_Data
+else 
+    echo Found Processed_Weather_Data
+fi 
+
+for file in `find $filename -type f`
+do 
+    echo $file
+    chmod 777 $file
+    # awk '{print}' $file | sed 's/,/ /g' | sed 's/ .\{2\}=/ /g'
+    sed 's/a/g/g' $file`
+done
