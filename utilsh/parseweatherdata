@@ -1,19 +1,19 @@
 #!/bin/bash
 
-filename=$1
+dirLocation='/home/mwesigwa/PEI2019_mwesigwa/data2/WeatherData/2017'
 
 echo The files will be stored in directory Processed_Weather_Data inside the data2 folder
 
 # create Processed_Weather_Directory if it doesnt exist
-if [ ! -d $'~/PEI2019_mwesigwa/data2/Processed_Weather_Data' ]; then
-   mkdir $'~/PEI2019_mwesigwa/data2/Processed_Weather_Data'
+if [ !-d $'~/PEI2019_mwesigwa/data2/Processed_Weather_Data' ]; then
+   mkdir ~/PEI2019_mwesigwa/data2/Processed_Weather_Data
    echo  Created Processed_Weather_Data
 else 
     echo Found Processed_Weather_Data
 fi 
 
 # processing for each file in WeatherData
-for file in `find $filename -type f`
+for file in `find $dirLocation -type f`
 do 
     chmod 777 $file
 
@@ -21,10 +21,14 @@ do
     outputFile=${file/WeatherData\/201?/Processed_Weather_Data}
     if [ ! -f  "$outputFile" ]; then
         touch $outputFile
+	echo Output file created
+    else
+	echo Output file found
     fi
 
     echo Storing output from $file in $outputFile
-    # copy the processed data into the file
-    awk '{print}' $file | sed 's/,/ /g' | sed 's/ .\{2\}=/ /g' > outputFile
 
+    # copy the processed data into the file
+    awk '{print}' $file | sed 's/,/ /g' | sed 's/ .\{2\}=/ /g' | sed 's/[A-Z] / /g' > $outputFile
+  
 done

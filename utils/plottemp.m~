@@ -1,0 +1,18 @@
+function varargout = plottemp(data)
+% function varargout = plottemp(data)
+% fill in all this stuff later
+
+
+defval('data', file2mat());
+
+temp = str2n(data(:,8)));
+time = str2num(char(data(:,1)));
+
+
+plt = plot(time, temp, 'k-');
+title('A plot of temperature against time');
+xlabel('Time');
+ylabel('Temperature');
+
+varns = {plt};
+varargout = varns(1:nargout);

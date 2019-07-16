@@ -1,0 +1,2 @@
+function varargout = genL2fourier(y_vals, x_vals, periods);
+# function varargout = genL2Fourier(x_vXC

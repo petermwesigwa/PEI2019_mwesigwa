@@ -21,7 +21,7 @@ function varargout = generateL2(x_vals, y_vals, degree, xver)
 %  returns [1 1]
 %
 %
-% Last modified by mwesigwa@princeton.edu Jun 25 2019
+% Last modified by mwesigwa@princeton.edu Jul 16 2019
 %
 
 % number of x-values
@@ -35,23 +35,8 @@ for j=1:degree+1
   end
 end
 
-% Compute the linear fit for all these points
-defval('meth',2)
-switch meth
-
-  % This case generates the inverse using right divide
-  case 1
-    % transpose the x matrix
-    xT = transpose(x);
-    
-    % compute the coefficients of regression
-    xTx = xT*x;
-    xTy = xT*y_vals;
-    coeffs = xTx\xTy;
-   
-  case 2 % this case uses the pinv function
-    coeffs = pinv(x)*y_vals;
-end
+% Compute the coefficients of the fit using the pseudo-inverse
+coeffs = pinv(x) * y
 
 % extra functionality for debugging
 defval('xver', 0)

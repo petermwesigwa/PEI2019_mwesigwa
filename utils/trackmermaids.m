@@ -56,7 +56,7 @@ for i=1:n
                float_names(i,:), '_030.txt');
     data = parsemermaiddata(url);
     [lon, lat, dLong, dLat, longFit, latFit] = predictfloatpaths(data, ...
-                                           10, 0, deg);
+                                           15, 0, deg);
     lon_vel(i) = dLong(end);
     lat_vel(i) = dLat(end);                          ;
     long_pos(i) = longs(i) + evalpol(longFit, dnum);
@@ -73,7 +73,7 @@ latFit
 dnum
 
 plot(longs, lats, 'bs');
-plot(lon_ships, lat_ships);
+%plot(lon_ships, lat_ships, 'k-');
 hold on;
 text(longs, lats, float_names);
 plot(long_pos, lat_pos, 'rx');
