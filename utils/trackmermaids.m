@@ -6,8 +6,8 @@ function varargout  = trackmermaids(date, curr)
 %
 % Inputs
 % DATE  A string representing the date on which predictions for the
-% float location are to be made. Format must be in MM-DD-YYYY or
-% MM-DD-YYYY HH:MM:SS% 
+% float location are to be made. Format must be in DD-MM-YYYY or
+% DD-MMM-YYYY HH:MM:SS% 
 % Output:
 %
 %

@@ -9,7 +9,7 @@ function showacc(thr)
 %
 % THR Threshold distance, all accurate predictions must have the actual
 % point lying within this distance of the prediction. Default value of 
-% 15
+% 15 km
 %
 % --------------------------------
 % Outputs:
