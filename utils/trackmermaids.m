@@ -79,6 +79,7 @@ lat_pos = NaN(size(lats));
 
 
 for i=1:n
+
     [longFit, latFit, lastdates(i)] = mermpred(float_names(i,:));
 
     if dnum==0
@@ -89,7 +90,6 @@ for i=1:n
 
     long_pos(i) = evalpol(longFit, (num_days));
     lat_pos(i) = evalpol(latFit, (num_days));
-end
 
 % convert from serial date numbers to date strings
 lastdates=datestr(lastdates);
