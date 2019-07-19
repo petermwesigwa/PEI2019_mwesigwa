@@ -17,7 +17,8 @@ function varargout = testfit(x_vals, y_vals, fit)
 % explained by that of the independent variable. 
 % ERRORS the difference between the predicted y-value and the
 % observed y-value for each observation in the training set
-% Last modified by mwesigwa@princeton.edu Jun 26 2019
+%
+% Last modified by mwesigwa@princeton.edu Jul 17 2019
 %
 
 % y predictions based on the fit
@@ -43,5 +44,5 @@ ssd = sd'*sd;
 r_squared = 1 - sse/ssd;
 
 % optional arguments
-varns={r_squared, errors};
+varns={errors};
 varargout=varns(1:nargout);

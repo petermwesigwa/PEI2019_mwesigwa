@@ -44,25 +44,23 @@ function varargout = plotfloatpath(float_name, trainSize, testSize, ...
 
 % default values for the parameters
 defval('float_name', 'P020');
-defval('trainSize', 7);
-defval('testSize', 10);
+defval('trainSize', 5);
+defval('testSize', 5);
 defval('degree', 2);
 defval('plotornot', 1);
 defval('xver', 0);
 
-% construct the url with the data for this particular float
-url = strcat('http://geoweb.princeton.edu/people/simons/SOM/', float_name, '_030.txt');
 
-% read and store the data from the url in a cell array
-data = parsemermaiddata(url);
+% read and store the data for the float
+data = parsemermaiddata(float_name);
 
 % make predictions for each data point in the data
-[longs, lats, dLongs, dLats, fitLongs, fitLats, stats] = predictfloatpaths(data, ...
-                                                  trainSize, testSize, ...
+[longs, lats, dLongs, dLats] = predictfloatpaths(data, ...
+                                                  trainSize, ...
                                                   degree, xver);
 % plot the data points as well as the predictions
-[plt, quiv] = plotpath(float_name, longs, lats, dLongs, dLats, fig);
+[plt, quiv] = plotpath(float_name, longs, lats, dLongs, dLats);
 
 % optional output arguments
-varns={plt, quiv, stats};
+varns={plt, quiv};
 varargout=varns(1:nargout);

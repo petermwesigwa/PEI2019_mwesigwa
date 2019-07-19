@@ -1,4 +1,4 @@
-function varargout = plotpath(float_name, longs, lats, dLongs, dLats, fig)
+function varargout = plotpath(float_name, longs, lats, dLongs, dLats)
 % function [plt quiv] = plotpath(float_name. longs, lats, dLongs,
 % dlats, fig)
 % 

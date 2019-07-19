@@ -1,0 +1,8 @@
+thr = 13;
+acc = testpreds(thr, 11);
+bar(acc(1,:), acc(2,:), 0.05)
+titl
+title('Variation of accuracy with future distance of prediction')
+xlabel('Future distance in days of prediction')
+ylab = sprintf('Fraction of floats within %d km of predicted location', thr);
+ylabel(ylab)
