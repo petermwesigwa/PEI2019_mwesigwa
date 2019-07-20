@@ -1,19 +1,19 @@
-function varargout = genL2sinusoidal(x_vals, y_vals, periods, xver)
-% function [coeffs] = genL2sinusoidal(x_vals, y_vals, periods, xver)
+function varargout = genL2sinusoidal(x_vals, y_vals, periods)
+% function [coeffs] = genL2sinusoidal(x_vals, y_vals, periods)
 % 
 % Description
 % This function computes the line of best fit using sinusoidal
 % function x(t) = a + sum(a_i sin (2pi * t/T_i) + b_i cos(2pi * t/T_i)
 %  
+% -------------------------------
 % Inputs
 % XVALS : The array of independent variables
 % YVALS : The array of dependent variables
 % PERIODS : The periods for which we will be generating sine and
 % cosine functions
-% xver     1 extra verification
-%          0 dont
 %
-% Outputs
+% -------------------------------
+% Outputs:
 % COEFFS Coefficients of the sine and cosine for each function
 % Example usage
 % coeffs = genL2sinusoidal(1:4, sin(2 pi * 1:4), returns )
