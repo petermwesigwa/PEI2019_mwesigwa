@@ -61,9 +61,6 @@ current_data = parsemermaiddata("All");
 % names of the floats
 float_names = char(current_data(:,1));
 
-% degree of the polynomial fit for the regression
-deg = 2;
-
 n = length(float_names);
 
 longs = str2num(char(current_data(:,5)));
@@ -90,6 +87,7 @@ for i=1:n
 
     long_pos(i) = evalpol(longFit, (num_days));
     lat_pos(i) = evalpol(latFit, (num_days));
+end
 
 % convert from serial date numbers to date strings
 lastdates=datestr(lastdates);

@@ -36,7 +36,7 @@ for j=1:degree+1
 end
 
 % Compute the coefficients of the fit using the pseudo-inverse
-coeffs = pinv(x) * y
+coeffs = pinv(x) * y_vals;
 
 % extra functionality for debugging
 defval('xver', 0)
