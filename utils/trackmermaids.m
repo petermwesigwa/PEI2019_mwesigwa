@@ -1,4 +1,4 @@
-function varargout  = trackmermaids(pred_date, curr)
+function varargout  = trackmermaids(pred_date)
 
 % Description:
 % Gets the current position of all the mermaid as well as returning
@@ -98,23 +98,35 @@ if dnum==0
 end
     
 % plot the current position of the ship if available
-curr_lon = lon_ships(strcmp(today, ship_times));
-curr_lat = lat_ships(strcmp(today, ship_times));
 
+long_labels = longs + 0.5;
+lat_labels = lats - 0.5;
+longs = [longs';long_pos'];
+lats = [lats';lat_pos'];
 
-plot(lon_ships, lat_ships, 'kx-.');
-hold on;
-plot(long_pos, lat_pos, 'rx');
-plot(curr_lat, curr_lon, 'r*');
-text(long_pos, lat_pos, float_names);
-text(lon_ships, lat_ships, ship_times);
-if curr==1
-    plot(longs, lats, 'bs');
-    text(longs, lats, float_names);
-end
-hold off;
-title(strcat("Predicted float locations for ",pred_date, " made on ", today));
+plot(longs, lats, 'r:', 'LineWidth', 2);
+grid on
+hold on
+p1 = plot(longs(1,:), lats(1,:), 'rd', ...
+    'MarkerFaceColor', 'r');
+p2 = plot(longs(2,:), lats(2,:), 'ks', ...
+    'MarkerFaceColor', 'k', ...
+    'MarkerSize', 5);
+p3 = plot(lon_ships, lat_ships, 'b*-.', ...
+    'MarkerSize', 1);
+plot([long_labels';longs(1,:)], [lat_labels';lats(1,:)], 'k--')
+text(long_labels, lat_labels, float_names);
+text(lon_ships+0.2, lat_ships+0.2, ship_times, ...
+    'Color', 'b', ...
+    'FontSize', 8)
+hold off
+title(strcat("Predicted Mermaid locations for ",pred_date, ...
+    " made on ", today));
 
+legend([p1, p2, p3], ...
+    {'Current Location', 'Predicted Location', 'Ship Path'})
+xlabel("Longitude in degrees");
+ylabel("Latitude in degrees");
 % optional output
 varns = {today, lastdates};
 varargout = varns(1:nargout);
