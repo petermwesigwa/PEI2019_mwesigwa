@@ -92,17 +92,18 @@ end
 % convert from serial date numbers to date strings
 lastdates=datestr(lastdates);
 
-today = date();
 if dnum==0
-    pred_date = datestr(datenum(today) + 7);
+    pred_date = datestr(;
+else
+    today=datestr(dnum);
 end
-    
+
 % plot the current position of the ship if available
 curr_lon = lon_ships(strcmp(today, ship_times));
 curr_lat = lat_ships(strcmp(today, ship_times));
 
 
-plot(lon_ships, lat_ships, 'kx-.');
+plot(lon_ships, lat_ships, 'bx:');
 hold on;
 plot(long_pos, lat_pos, 'rx');
 plot(curr_lat, curr_lon, 'r*');
@@ -113,7 +114,7 @@ if curr==1
     text(longs, lats, float_names);
 end
 hold off;
-title(strcat("Predicted float locations for ",pred_date, " made on ", today));
+title(strcat("Predicted float locations for ",today));
 
 % optional output
 varns = {today, lastdates};
