@@ -77,8 +77,8 @@ end
 if ploterrors==1
     plot(times, errors, 'r*-.', ...
     'LineWidth', 0.9);
-    ti=sprintf("Errors for predictions made on %s", date());
-    title(ti);
+    ti=sprintf("Error variation with future distance of prediction made")
+    title("Variation of error with increase in prediction distance")
     xlabel("Prediction distance (days)")
     ylabel("Error (km)")
     text(times(test,:)+0.5, errors(test,:)+0.5, float_names);
