@@ -26,7 +26,7 @@ acc = testpreds(thr, 11);
 
 % plot 
 bar(acc(1,:), acc(2,:), 0.1)
-ti = sprintf('Accuracy  with threshold  of %d km', thr);
+ti = sprintf('Accuracy  with threshold  of %d km made on %s', thr, date());
 title(ti)
 xlabel('Future distance in days of prediction')
 ylab = sprintf('Fraction of floats within %d km of predicted location', thr);
