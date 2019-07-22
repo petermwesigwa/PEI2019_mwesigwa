@@ -55,12 +55,7 @@ catch
     dnum = datenum(today)+7;
 end
 
-% number of points plotted to depict the accurate path of each float
-path_pts = dnum - datenum(today);
 
-if path_pts < 1
-    error("Prediction must be at least one day in the future");
-end
 
 % data detailing the current position of the floats 
 current_data = parsemermaiddata("All");
@@ -69,6 +64,12 @@ current_data = parsemermaiddata("All");
 float_names = char(current_data(:,1));
 
 n = length(float_names);
+
+% number of points plotted to depict the accurate path of each float
+path_pts = dnum - datenum(today);
+
+if path_pts < 1
+    error("Prediction must be at least one day in the future")
 
 longs = NaN(path_pts+1, n);
 lats = NaN(path_pts+1, n);
