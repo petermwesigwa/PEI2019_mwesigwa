@@ -101,12 +101,13 @@ lastdates=datestr(lastdates);
 
 pred_date = datestr(dnum);
     
-% plot the current position of the ship if available
 
+% co-ordinates of the mermaid labels
 long_labels = longs(1,:)+0.5;
 lat_labels = lats(1,:)-0.5;
 
-plot(longs, lats, 'r:', 'LineWidth', 2);
+% plot the data
+plot(longs, lats, 'k:', 'LineWidth', 2);
 grid on
 hold on
 p1 = plot(longs(1,:), lats(1,:), 'rd', ...
@@ -117,8 +118,10 @@ p2 = plot(longs(end,:), lats(end,:), 'ks', ...
     'MarkerSize', 7);
 p3 = plot(lon_ships, lat_ships, 'b*-.', ...
     'MarkerSize', 1);
-plot([long_labels;longs(1,:)], [lat_labels;lats(1,:)], 'k--')
-text(long_labels', lat_labels', float_names);
+plot([long_labels;longs(1,:)], [lat_labels;lats(1,:)], 'r--')
+text(long_labels', lat_labels', float_names, ...
+    'Color', 'r', ...
+    'FontSize', 13);
 text(lon_ships+0.2, lat_ships+0.2, ship_times, ...
     'Color', 'b', ...
     'FontSize', 8)
