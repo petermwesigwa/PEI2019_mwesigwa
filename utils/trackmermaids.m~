@@ -44,7 +44,7 @@ lon_ships(lon_ships < 0) = lon_ships(lon_ships < 0) + 360;
 % current date
 today = date();
 
-defval('max_dist', 100)
+defval('max_dist', 20)
 
 try
     
@@ -107,16 +107,11 @@ pred_date = datestr(dnum);
                             lon_ships', lat_ships');
                         
 
-indices = (1:n)';
+indices = (1:n)'
 ind = indices(distances < max_dist);
 
 % filter out the distances that we want
-longs = longs(:,ind);
-lats = lats(:,ind);
-float_names = float_names(ind,:);
-distances = distances(ind);
-mid_x = mid_x(ind);
-mid_y = mid_y(ind);
+longs
 
 % co-ordinates of the mermaid labels
 long_labels = longs(1,:)+0.5;
@@ -146,8 +141,7 @@ text(lon_ships+0.2, lat_ships+0.2, ship_times, ...
     'FontSize', 8)
 hold off
 title(strcat("Predicted Mermaid locations for ",pred_date, ...
-    " made on ", today, " for within ", num2str(max_dist), ...
-    " km of the ship's path."));
+    " made on ", today));
 
 legend([p1, p2, p3], ...
     {'Current Location', 'Predicted Location', 'Ship Path'})
