@@ -31,3 +31,4 @@ title(ti)
 xlabel('Future distance in days of prediction')
 ylab = sprintf('Fraction of floats within %d km of predicted location', thr);
 ylabel(ylab)
+ylim([0 1])
