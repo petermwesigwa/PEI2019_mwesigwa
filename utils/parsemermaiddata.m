@@ -75,9 +75,8 @@ try
           d = char(strsplit(split_data{i}, ' '));
           if strcmp(d(1,1), "N")
               d(1,1) = 'P';
-              continue
           elseif strcmp(d(1,1:4), "P007")
-              continue
+             continue
           elseif i > 23
               continue
           end

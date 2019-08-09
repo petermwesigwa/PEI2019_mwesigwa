@@ -89,7 +89,7 @@ end
 if tst == 0
     varns={fitLongs, fitLats, last_date};
 else
-    if pt < 0
+    if pt < 1
         error = [mean(t); mean(err)];
     else
         error = [t((iters-pt),:); err((iters-pt),:)];

@@ -65,6 +65,8 @@ n = length(float_names);
 
 longs = str2num(char(current_data(:,5)));
 lats = str2num(char(current_data(:,4)));
+mean_error = NaN(size(lats));
+std_error = NaN(size(lats));
 
 % wraparound for longitude values
 longs(longs < 0) = longs(longs < 0) + 360;
@@ -88,8 +90,8 @@ for i=1:n
 
     long_pos(i) = evalpol(longFit, (num_days));
     lat_pos(i) = evalpol(latFit, (num_days));
-    mean_error = evalpol(mean_err_fit, num_days);
-    std_error = evalpol(std_err_fit, num_days);
+    mean_error(i) = evalpol(mean_err_fit, num_days);
+    std_error(i) = evalpol(std_err_fit, num_days);
 end
 
 % convert from serial date numbers to date strings
@@ -109,14 +111,14 @@ lats = [lats';lat_pos'];
 
 plot(longs, lats, 'r:', 'LineWidth', 2);
 grid on
+axis equal
 hold on
 p1 = plot(longs(1,:), lats(1,:), 'rd', ...
     'MarkerFaceColor', 'r');
 plot(longs(end,:), lats(end,:), 'ks', ...
     'MarkerFaceColor', 'k', ...
     'MarkerSize', 1);
-p2 = plot(longs(end,:), lats(end,:), 'ko', ...
-    'MarkerSize', mean_error);
+p2 = scatter(longs(end,:), lats(end,:), mean_error + std_error, 'o', 'k');
 p3 = plot(lon_ships, lat_ships, 'b*-.', ...
     'MarkerSize', 1);
 plot([long_labels';longs(1,:)], [lat_labels';lats(1,:)], 'k--')
