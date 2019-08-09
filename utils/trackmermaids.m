@@ -1,17 +1,30 @@
-function varargout  = trackmermaids(pred_date)
+function varargout  = trackmermaids(pred_date, max_dist)
 
 % Description:
 % Gets the current position of all the mermaid as well as returning
-% their expected position a set period of time from now
+% their expected position on a specific date. Returns floats that
+% are predicted to be within a certain threshold distance of the
+% ship's path. 
 %
 % Inputs
-% DATE  A string representing the date on which predictions for the
+% PREDDATE  A string representing the date on which predictions for the
 % float location are to be made. Format must be in DD-MM-YYYY or
-% DD-MMM-YYYY HH:MM:SS% 
+% DD-MMM-YYYY HH:MM:SS%. The default date is 18-August-2019, the
+% date at which the expedition aims to intercept P023 and P024.
+% MAXDIST  The maximum distance (in km) which a float must be from the
+% ships path in order to be displayed on the graph. Default
+% value is 10
+%
 % Output:
+% FLOATNAMES  The floats of interest which will be within the
+% threshold distance from the ships path at the time of prediction
+% COORDS  A 2-column matrix containing the latitude and longitude
+% respectively of the predicted position of each of the floats of
+% interest
+% DISTANCES  The distances in km of the predicted locations of each
+% of the floats of interest from the ship path.
 %
-%
-% Last modified by mwesigwa@princeton.edu on Jul 01 2019
+% Last modified by mwesigwa@princeton.edu on Aug 06 2019
 %
 
 % convert the date into a date number
@@ -41,6 +54,11 @@ ship_times = ["5 Aug 08:00", "6 Aug 18:00", "7 Aug 08:00",...
 lon_ships(lon_ships < 0) = lon_ships(lon_ships < 0) + 360;
          
 
+% current date
+today = date();
+
+defval('max_dist', 100)
+
 try
     
     if isstring(pred_date) || ischar(pred_date)
@@ -49,33 +67,35 @@ try
         dnum = datenum(datetime(ship_times(pred_date)));
     end
 catch
-    dnum = 0;
+    dnum = datenum(datetime('18-Aug-2019 12:00:00'));
 end
 
-defval('curr', 0)
+% number of points plotted to depict the accurate path of each float
+path_pts = round(dnum) - datenum(today);
 
+if path_pts < 1
+    error("Prediction must be at least one day in the future");
+end
 
 % data detailing the current position of the floats 
 current_data = parsemermaiddata("All");
 
 % names of the floats
-float_names = char(current_data(:,1));
+float_names = char(current_data(:,1))
 
-n = length(float_names);
+[n x] = size(float_names)
 
-longs = str2num(char(current_data(:,5)));
-lats = str2num(char(current_data(:,4)));
-mean_error = NaN(size(lats));
-std_error = NaN(size(lats));
+longs = NaN(path_pts+1, n);
+lats = NaN(path_pts+1, n);
+
+
+longs(1,:) = str2num(char(current_data(:,5)));
+lats(1,:) = str2num(char(current_data(:,4)));
 
 % wraparound for longitude values
 longs(longs < 0) = longs(longs < 0) + 360;
 
 lastdates = zeros(size(longs));
-
-long_pos = NaN(size(longs));
-lat_pos = NaN(size(lats));
-
 
 for i=1:n
 
@@ -88,52 +108,69 @@ for i=1:n
         num_days = dnum - lastdates(i);
     end
 
-    long_pos(i) = evalpol(longFit, (num_days));
-    lat_pos(i) = evalpol(latFit, (num_days));
-    mean_error(i) = evalpol(mean_err_fit, num_days);
-    std_error(i) = evalpol(std_err_fit, num_days);
+    times = linspace(0, num_days, path_pts);
+    longs(2:(path_pts+1),i) = evalpol(longFit, times);
+    lats(2:(path_pts+1),i) = evalpol(latFit, times);
 end
 
 % convert from serial date numbers to date strings
 lastdates=datestr(lastdates);
 
-today = date();
-if dnum==0
-    pred_date = datestr(datenum(today) + 7);
-end
-    
-% plot the current position of the ship if available
+pred_date = datestr(dnum);
 
-long_labels = longs + 0.5;
-lat_labels = lats - 0.5;
-longs = [longs';long_pos'];
-lats = [lats';lat_pos'];
+[distances, mid_x, mid_y] = dist2path(longs(end,:)', lats(end,:)', ...
+                            lon_ships', lat_ships');
+                        
 
-plot(longs, lats, 'r:', 'LineWidth', 2);
+indices = (1:n)';
+ind = indices(distances < max_dist);
+
+% filter out the distances that we want
+longs = longs(:,ind);
+lats = lats(:,ind);
+float_names = float_names(ind,:);
+distances = distances(ind);
+mid_x = mid_x(ind);
+mid_y = mid_y(ind);
+
+% co-ordinates of the mermaid labels
+long_labels = longs(1,:)+0.5;
+lat_labels = lats(1,:)-0.5;
+
+% plot the data
+plot(longs, lats, 'k:', 'LineWidth', 2);
 grid on
-axis equal
+axis('equal');
 hold on
 p1 = plot(longs(1,:), lats(1,:), 'rd', ...
-    'MarkerFaceColor', 'r');
-plot(longs(end,:), lats(end,:), 'ks', ...
+    'MarkerFaceColor', 'r', ...
+    'MarkerSize', 7);
+p2 = plot(longs(end,:), lats(end,:), 'ks', ...
     'MarkerFaceColor', 'k', ...
-    'MarkerSize', 1);
-p2 = scatter(longs(end,:), lats(end,:), mean_error + std_error, 'o', 'k');
+    'MarkerSize', 7);
 p3 = plot(lon_ships, lat_ships, 'b*-.', ...
     'MarkerSize', 1);
-plot([long_labels';longs(1,:)], [lat_labels';lats(1,:)], 'k--')
-text(long_labels, lat_labels, float_names);
+plot([long_labels;longs(1,:)], [lat_labels;lats(1,:)], 'r--')
+plot([mid_x';longs(end,:)], [mid_y';lats(end,:)], 'm:')
+text(long_labels', lat_labels', ...
+    strcat(float_names, num2str(distances, '\r\n(%.1f km)')), ...
+    'Color', 'r', ...
+    'FontSize', 7);
 text(lon_ships+0.2, lat_ships+0.2, ship_times, ...
     'Color', 'b', ...
     'FontSize', 8)
 hold off
 title(strcat("Predicted Mermaid locations for ",pred_date, ...
-    " made on ", today));
+    " made on ", today, " for within ", num2str(max_dist), ...
+    " km of the ship's path."));
 
 legend([p1, p2, p3], ...
     {'Current Location', 'Predicted Location', 'Ship Path'})
 xlabel("Longitude in degrees");
 ylabel("Latitude in degrees");
 % optional output
-varns = {today, lastdates};
+pLongs = longs(end,:); 
+pLongs(pLongs > 180) = pLongs(pLongs > 180) - 360; %remove wraparound
+co_ords = [lats(end,:);pLongs]';
+varns = {float_names, co_ords, distances};
 varargout = varns(1:nargout);

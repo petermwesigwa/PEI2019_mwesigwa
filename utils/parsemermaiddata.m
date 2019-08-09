@@ -53,12 +53,16 @@ try
         data = strings(rows-1, cols);
         for i = 1:rows-1
           d = char(strsplit(split_data{i}, ' '));
+          
+          % filter out nans
           if isnan(str2num(d(LAT_COL,:)))==1
               nan_found = 1;
               continue
           elseif isnan(str2num(d(LON_COL,:)))==1
               nan_found = 1;
               continue
+          
+              % remove multiple entries
           elseif strcmp(date, d(2,:)) == 1
               continue  
           end
@@ -73,10 +77,14 @@ try
         data = strings(rows-1, cols);
         for i = 1:rows-1
           d = char(strsplit(split_data{i}, ' '));
+          
+          % replace all float names starting with N to start with P
           if strcmp(d(1,1), "N")
               d(1,1) = 'P';
           elseif strcmp(d(1,1:4), "P007")
              continue
+          elseif i > 23
+              continue
           elseif i > 23
               continue
           end
