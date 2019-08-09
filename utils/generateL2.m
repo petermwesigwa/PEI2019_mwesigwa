@@ -26,7 +26,6 @@ function varargout = generateL2(x_vals, y_vals, degree, xver)
 
 % number of x-values
 n = length(x_vals);
-
 % create the X matrix
 x = str2double(cell(n, degree+1)); 
 for j=1:degree+1

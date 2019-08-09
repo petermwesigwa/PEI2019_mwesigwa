@@ -82,6 +82,8 @@ try
           if strcmp(d(1,1), "N")
               d(1,1) = 'P';
           elseif strcmp(d(1,1:4), "P007")
+             continue
+          elseif i > 23
               continue
           elseif i > 23
               continue

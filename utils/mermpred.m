@@ -91,6 +91,7 @@ t = NaN(iters, tst);
 
 % error of of models tested at these times
 err = NaN(iters, tst);
+err_fit = NaN(iters, deg + 1);
 
 
 if tst == 0 % do not test in this case
@@ -107,6 +108,7 @@ else % test in this case
             lats(i-trn+1:i), deg);
 
         if tst > 0
+            % test lat, longs and times
             test_lats = lats(i+1:i+tst);
             test_longs = longs(i+1:i+tst);
             test_times = times(i+1:i+tst);
@@ -114,9 +116,16 @@ else % test in this case
             lat_pred = evalpol(fitLats, test_times);
             lon_pred = evalpol(fitLongs, test_times);
 
-            t(i-trn+1,:) = transpose(test_times);
-            err(i-trn+1,:) = transpose(haversine(test_lats, test_longs, ...
+            % errors as the distance between predicted and actual locations
+            errors = transpose(haversine(test_lats, test_longs, ...
                 lat_pred, lon_pred)) * 0.001;
+            
+            t(i-trn+1,:) = transpose(test_times);
+            err(i-trn+1,:) = errors;
+            
+            % fit for error variation with time
+            err_fit(i-trn+1,:) = generateL2(test_times,...
+                transpose(errors), 2);
         end
     end
 end
@@ -138,12 +147,13 @@ end
 if tst == 0
     varns={fitLongs, fitLats, last_date};
 else
-    if pt < 0
+    if pt < 1
         error = [mean(t); mean(err)];
     else
         error = [t((iters-pt),:); err((iters-pt),:)];
     end
-    varns = {error, fitLong, fitLat};
+
+    varns = {error, mean(err_fit), std(err_fit)};
       
 end
 varargout = varns(1:nargout);

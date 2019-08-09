@@ -88,6 +88,7 @@ float_names = char(current_data(:,1))
 longs = NaN(path_pts+1, n);
 lats = NaN(path_pts+1, n);
 
+
 longs(1,:) = str2num(char(current_data(:,5)));
 lats(1,:) = str2num(char(current_data(:,4)));
 
@@ -99,13 +100,14 @@ lastdates = zeros(size(longs));
 for i=1:n
 
     [longFit, latFit, lastdates(i)] = mermpred(float_names(i,:));
+    [~, mean_err_fit, std_err_fit] = mermpred(float_names(i,:), 5);
 
     if dnum==0
         num_days = 7;
     else
         num_days = dnum - lastdates(i);
     end
-    
+
     times = linspace(0, num_days, path_pts);
     longs(2:(path_pts+1),i) = evalpol(longFit, times);
     lats(2:(path_pts+1),i) = evalpol(latFit, times);
