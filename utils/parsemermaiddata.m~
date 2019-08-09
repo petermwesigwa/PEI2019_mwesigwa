@@ -79,7 +79,6 @@ try
           elseif strcmp(d(1,1:4), "P007")
               continue
           elseif i > 23
-              continue
           end
           data(filled,:) = d;
           filled = filled + 1;

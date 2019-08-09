@@ -78,7 +78,7 @@ lat_pos = NaN(size(lats));
 for i=1:n
 
     [longFit, latFit, lastdates(i)] = mermpred(float_names(i,:));
-    [~, mean_err_fit, std_err_fit] = mermpred(float_names(i,:), 5);
+    [errors, mean_err, std_err] = mermpred(float_names(i,:), );
 
     if dnum==0
         num_days = 7;
@@ -88,8 +88,6 @@ for i=1:n
 
     long_pos(i) = evalpol(longFit, (num_days));
     lat_pos(i) = evalpol(latFit, (num_days));
-    mean_error = evalpol(mean_err_fit, num_days);
-    std_error = evalpol(std_err_fit, num_days);
 end
 
 % convert from serial date numbers to date strings
@@ -112,11 +110,9 @@ grid on
 hold on
 p1 = plot(longs(1,:), lats(1,:), 'rd', ...
     'MarkerFaceColor', 'r');
-plot(longs(end,:), lats(end,:), 'ks', ...
+p2 = plot(longs(2,:), lats(2,:), 'ks', ...
     'MarkerFaceColor', 'k', ...
-    'MarkerSize', 1);
-p2 = plot(longs(end,:), lats(end,:), 'ko', ...
-    'MarkerSize', mean_error);
+    'MarkerSize', 5);
 p3 = plot(lon_ships, lat_ships, 'b*-.', ...
     'MarkerSize', 1);
 plot([long_labels';longs(1,:)], [lat_labels';lats(1,:)], 'k--')
