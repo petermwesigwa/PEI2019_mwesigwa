@@ -77,10 +77,9 @@ try
         data = strings(rows-1, cols);
         for i = 1:rows-1
           d = char(strsplit(split_data{i}, ' '));
-          
-          % replace all float names starting with N to start with P
+          % replace all float names starting with
           if strcmp(d(1,1), "N")
-              d(1,1) = 'P';
+              continue
           elseif strcmp(d(1,1:4), "P007")
               continue
           elseif i > 23

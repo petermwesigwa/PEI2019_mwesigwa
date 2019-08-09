@@ -8,8 +8,16 @@ function varargout  = trackmermaids(pred_date, max_dist)
 % DATE  A string representing the date on which predictions for the
 % float location are to be made. Format must be in DD-MM-YYYY or
 % DD-MMM-YYYY HH:MM:SS% 
-% Output:
+% MAXDIST Threshold such that floats with a greater distance than this
+% from the path are not considered
 %
+% Output:
+% FLOATNAMES: The floats predicted to be within MAXDIST from the ship path
+% PRED_COORDS: A matrix with columns 1 and 2 for predicted longitude and
+% latitude of the floats respectively
+% DISTANCES: Distances of floats to the path
+% 
+% FLOAT N
 %
 % Last modified by mwesigwa@princeton.edu on Jul 01 2019
 %
@@ -54,11 +62,11 @@ try
         dnum = datenum(datetime(ship_times(pred_date)));
     end
 catch
-    dnum = datenum(today)+7;
+    dnum = datenum(datetime('18-Aug-2019 12:00:00'));
 end
 
 % number of points plotted to depict the accurate path of each float
-path_pts = dnum - datenum(today);
+path_pts = round(dnum) - datenum(today);
 
 if path_pts < 1
     error("Prediction must be at least one day in the future");
@@ -68,9 +76,9 @@ end
 current_data = parsemermaiddata("All");
 
 % names of the floats
-float_names = char(current_data(:,1));
+float_names = char(current_data(:,1))
 
-n = length(float_names);
+[n x] = size(float_names)
 
 longs = NaN(path_pts+1, n);
 lats = NaN(path_pts+1, n);
@@ -154,5 +162,9 @@ legend([p1, p2, p3], ...
 xlabel("Longitude in degrees");
 ylabel("Latitude in degrees");
 % optional output
-varns = {distances, today, lastdates};
+pred_longs = longs(end,:)';
+pred_lats = lats(end,:)';
+pred_longs(pred_longs > 180) = pred_longs(pred_longs > 180) - 360;
+pred_coords = [pred_lats';pred_longs']';
+varns = {float_names, pred_coords, distances};
 varargout = varns(1:nargout);

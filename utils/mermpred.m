@@ -143,7 +143,7 @@ else
     else
         error = [t((iters-pt),:); err((iters-pt),:)];
     end
-    varns = {error};
+    varns = {error, fitLong, fitLat};
       
 end
 varargout = varns(1:nargout);
