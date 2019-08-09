@@ -2,24 +2,29 @@ function varargout  = trackmermaids(pred_date, max_dist)
 
 % Description:
 % Gets the current position of all the mermaid as well as returning
-% their expected position a set period of time from now
+% their expected position on a specific date. Returns floats that
+% are predicted to be within a certain threshold distance of the
+% ship's path. 
 %
 % Inputs
-% DATE  A string representing the date on which predictions for the
+% PREDDATE  A string representing the date on which predictions for the
 % float location are to be made. Format must be in DD-MM-YYYY or
-% DD-MMM-YYYY HH:MM:SS% 
-% MAXDIST Threshold such that floats with a greater distance than this
-% from the path are not considered
+% DD-MMM-YYYY HH:MM:SS%. The default date is 18-August-2019, the
+% date at which the expedition aims to intercept P023 and P024.
+% MAXDIST  The maximum distance (in km) which a float must be from the
+% ships path in order to be displayed on the graph. Default
+% value is 10
 %
 % Output:
-% FLOATNAMES: The floats predicted to be within MAXDIST from the ship path
-% PRED_COORDS: A matrix with columns 1 and 2 for predicted longitude and
-% latitude of the floats respectively
-% DISTANCES: Distances of floats to the path
-% 
-% FLOAT N
+% FLOATNAMES  The floats of interest which will be within the
+% threshold distance from the ships path at the time of prediction
+% COORDS  A 2-column matrix containing the latitude and longitude
+% respectively of the predicted position of each of the floats of
+% interest
+% DISTANCES  The distances in km of the predicted locations of each
+% of the floats of interest from the ship path.
 %
-% Last modified by mwesigwa@princeton.edu on Jul 01 2019
+% Last modified by mwesigwa@princeton.edu on Aug 06 2019
 %
 
 % convert the date into a date number
@@ -162,9 +167,8 @@ legend([p1, p2, p3], ...
 xlabel("Longitude in degrees");
 ylabel("Latitude in degrees");
 % optional output
-pred_longs = longs(end,:)';
-pred_lats = lats(end,:)';
-pred_longs(pred_longs > 180) = pred_longs(pred_longs > 180) - 360;
-pred_coords = [pred_lats';pred_longs']';
-varns = {float_names, pred_coords, distances};
+pLongs = longs(end,:); 
+pLongs(pLongs > 180) = pLongs(pLongs > 180) - 360; %remove wraparound
+co_ords = [lats(end,:);pLongs]';
+varns = {float_names, co_ords, distances};
 varargout = varns(1:nargout);
